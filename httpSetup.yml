@@ -1,0 +1,28 @@
+-
+        name: Tests
+        hosts: web
+        become: yes
+        tasks: 
+                - name: Install httpd server
+                  yum: 
+                        name: httpd
+                        state: present
+                - name: Start httpd server
+                  service: 
+                        name: httpd
+                        state: started
+-
+        name: Install docker
+        hosts: web
+        become: yes
+        tasks: 
+                - name: Add yum repository
+                  yum_repository:
+                          name: Docker
+                          description: Docker repo
+                          baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+                          mirrorlist: https://download.docker.com/linux/centos/docker-ce.repo
+                - name: Install docker
+                  yum:
+                         name: docker-ce
+                         state: present

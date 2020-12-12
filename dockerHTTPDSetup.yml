@@ -1,0 +1,48 @@
+--- 
+- 
+  become: true
+  hosts: all
+  name: "Setting up a Docker HTTPD container"
+  tasks: 
+    - 
+      name: Install Python
+      package:
+       name: python3
+    - 
+      name: "Configuring Docker repo"
+      yum_repository: 
+        baseurl: "https://download.docker.com/linux/centos/7/x86_64/stable/"
+        description: "Docker repository for yum"
+        gpgcheck: false
+        name: Docker
+    - 
+      command: "yum install docker-ce --nobest -y"
+      name: "Installing Docker"
+    - 
+      name: Enable Docker
+      service: 
+       name: docker
+       state: started
+       enabled: yes
+    - 
+      name: Install docker sdk for python
+      pip:
+       name: docker
+    - 
+     name: Pulling a Docker Image
+     docker_image:
+      name: httpd
+      source: pull
+    - 
+     name: Creating a docker container
+     docker_container:
+      name: WebServer
+      image: httpd
+    - 
+     name: Copy the Required Document File To target Node
+     copy:
+      src: index.html
+      dest: /root
+    - 
+     name: Copy the document files from the target node to container
+     command: "docker cp /root/index.html WebServer:/usr/local/apache2/htdocs/"
