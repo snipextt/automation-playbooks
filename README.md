@@ -1,1 +1,1 @@
-Some Ansible AUtomation playbook
+Some Ansible Automation playbook
