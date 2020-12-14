@@ -1,0 +1,35 @@
+---
+-
+  name: Setting up a frontend  haproxy load balancer
+  hosts: LoadBalancer
+  become: yes
+  tasks: 
+  - name: Installing haproxy package
+    package: 
+     name: haproxy
+     state: present
+  - name: Copy the config files
+    template:
+     src: haproxy.cfg
+     dest: "/etc/haproxy/"
+  - name: Start haproxy service
+    service:
+     name: haproxy
+     state: restarted
+-
+  name: Setting up the httpd backend
+  hosts: WebServer
+  become: yes
+  tasks: 
+  - name: Installing the httpd package
+    package:
+     name: httpd
+     state: present
+  - name: Copy the required files in document root
+    copy:
+     src: index.html
+     dest: "/var/www/html"
+  - name: Start the httpd services
+    service:
+     name: httpd
+     state: restarted 
