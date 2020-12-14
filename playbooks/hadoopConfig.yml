@@ -1,0 +1,33 @@
+---
+-
+  hosts: namenode
+  become: yes
+  name: Setting Up Namenode
+  tasks:
+  - name: Copying the core-site files
+    copy:
+     src: "../config/hadoop/namenode/core-site.xml"
+     dest: "/etc/hadoop/"
+  - name: Copything the hdfs-site file
+    copy:  
+     src: "../config/hadoop/namenode/hdfs-site.xml"
+     dest: "/etc/hadoop/"
+  - name: Format Namenode
+    command: "Hadoop namenode -format -y"
+  - name: Start namenode services
+    command: "hadoop-daemon.sh start namenode"
+-
+  hosts: datanodes
+  become: yes
+  name: Setting Up Namenode
+  tasks:
+  - name: Copying the core-site files
+    copy:
+     src: "../config/hadoop/datanode/core-site.xml"
+     dest: "/etc/hadoop/"
+  - name: Copything the hdfs-site file
+    copy:  
+     src: "../config/hadoop/datanode/hdfs-site.xml"
+     dest: "/etc/hadoop/"
+  - name: Start Datanode services
+    command: "hadoop-daemon.sh start datanode"

@@ -1,6 +1,6 @@
 ---
 -
-  name: Setting up a frontend  haproxy load balancer
+  name: Setting up a frontend haproxy load balancer
   hosts: LoadBalancer
   become: yes
   tasks: 
@@ -10,7 +10,7 @@
      state: present
   - name: Copy the config files
     template:
-     src: "../config/haproxy.cfg"
+     src: "../config/haproxy/haproxy.cfg"
      dest: "/etc/haproxy/"
   - name: Start haproxy service
     service:
