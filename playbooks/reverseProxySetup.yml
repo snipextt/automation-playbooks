@@ -10,7 +10,7 @@
      state: present
   - name: Copy the config files
     template:
-     src: haproxy.cfg
+     src: "../config/haproxy.cfg"
      dest: "/etc/haproxy/"
   - name: Start haproxy service
     service:

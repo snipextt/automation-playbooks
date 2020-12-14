@@ -41,7 +41,7 @@
     - 
      name: Copy the Required Document File To target Node
      copy:
-      src: index.html
+      src: "../config/index.html"
       dest: /root
     - 
      name: Copy the document files from the target node to container
